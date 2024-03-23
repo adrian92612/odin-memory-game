@@ -10,16 +10,26 @@ function App() {
   const [cards, setCards] = useState([]);
 
   useEffect(() => {
+    let isMounted = true;
     async function getCat() {
-      const data = await fetch(`https://api.pexels.com/v1/search?query=cat&per_page=${maxCards}`, {
-        headers: {
-          Authorization: "09H3yUdk3RzVen4vhzOMxzfpC7gKYrTZpAy0GZ9WK4ja5apSkU8DpZ6k",
-        },
-      });
-      const res = await data.json();
-      setCards([...res.photos]);
+      try {
+        const data = await fetch(
+          `https://api.pexels.com/v1/search?query=cat&per_page=${maxCards}`,
+          {
+            headers: {
+              Authorization: "09H3yUdk3RzVen4vhzOMxzfpC7gKYrTZpAy0GZ9WK4ja5apSkU8DpZ6k",
+            },
+          }
+        );
+        const res = await data.json();
+        if (isMounted) setCards([...res.photos]);
+      } catch (error) {
+        console.log(`Error: ${error}`);
+      }
     }
     getCat();
+
+    return () => (isMounted = false);
   }, [maxCards]);
 
   return (
@@ -28,7 +38,7 @@ function App() {
         <Scoreboard score={score} best={bestScore} max={maxCards} />
         {!game && (
           <div>
-            Diffculty Meter: {maxCards}
+            <p>Diffculty Meter: {maxCards} </p>
             <input
               type="range"
               min="3"
@@ -48,7 +58,7 @@ function App() {
         )}
 
         <div className="gameboard">
-          {game ? cards.map((card) => <p key={card.id}>{card.id}</p>) : <p>Loading...</p>}
+          {game && cards.map((card) => <p key={card.id}>{card.id}</p>)}
         </div>
       </main>
       <footer></footer>
