@@ -10,11 +10,16 @@ function App() {
   const [cards, setCards] = useState([]);
   const [selectedCards, setSelectedCards] = useState([]);
 
+  function shuffleCards(cards) {
+    return cards.sort(() => Math.random() - 0.5);
+  }
+
   function handleCardClick({ target }, id) {
     console.log(target, id);
     if (!selectedCards.includes(id)) {
       setSelectedCards([...selectedCards, id]);
       setScore((prevScore) => prevScore + 1);
+      shuffleCards(cards);
       if (score + 1 >= bestScore) {
         setBestScore(score + 1);
       }
@@ -39,6 +44,9 @@ function App() {
           }
         );
         const res = await data.json();
+        if (res.photos.length < maxCards) {
+          throw new Error("No Data for this one.");
+        }
         if (isMounted) setCards([...res.photos]);
       } catch (error) {
         console.log(`Error: ${error}`);
