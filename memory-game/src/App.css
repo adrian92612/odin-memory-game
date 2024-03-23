@@ -1,0 +1,15 @@
+.gameboard {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-evenly;
+  align-items: center;
+  gap: 20px;
+}
+
+.card {
+  flex: 0 0 250px;
+}
+
+img {
+  width: 100%;
+}

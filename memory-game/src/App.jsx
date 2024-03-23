@@ -8,6 +8,23 @@ function App() {
   const [game, setGame] = useState(false);
   const [maxCards, setMaxCards] = useState(9);
   const [cards, setCards] = useState([]);
+  const [selectedCards, setSelectedCards] = useState([]);
+
+  function handleCardClick({ target }, id) {
+    console.log(target, id);
+    if (!selectedCards.includes(id)) {
+      setSelectedCards([...selectedCards, id]);
+      setScore((prevScore) => prevScore + 1);
+      if (score + 1 >= bestScore) {
+        setBestScore(score + 1);
+      }
+    } else {
+      setGame(!game);
+      setSelectedCards([]);
+      setScore(0);
+    }
+    console.log(selectedCards);
+  }
 
   useEffect(() => {
     let isMounted = true;
@@ -58,7 +75,14 @@ function App() {
         )}
 
         <div className="gameboard">
-          {game && cards.map((card) => <p key={card.id}>{card.id}</p>)}
+          {game &&
+            cards.map((card) => {
+              return (
+                <div key={card.id} className="card" onClick={(e) => handleCardClick(e, card.id)}>
+                  <img src={card.src.portrait} alt={card.alt} />
+                </div>
+              );
+            })}
         </div>
       </main>
       <footer></footer>
