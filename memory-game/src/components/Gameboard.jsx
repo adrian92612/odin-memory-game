@@ -5,7 +5,7 @@ export default function GameBoard({ game, cards, handleCardClick }) {
       {game &&
         cards.map((card) => {
           return (
-            <div key={card.id} className="card" onClick={(e) => handleCardClick(e, card.id)}>
+            <div key={card.id} className="card" onClick={() => handleCardClick(card.id)}>
               <img src={card.src.portrait} alt={card.alt} />
             </div>
           );

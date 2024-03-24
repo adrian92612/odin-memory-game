@@ -9,19 +9,21 @@ export default function GameSettings({
 }) {
   return (
     <form className="game-form">
-      <p>Diffculty Meter: {maxCards} </p>
+      <p>Card Count: {maxCards} </p>
       <input
+        className="game-form__range"
         type="range"
         min="3"
         max="25"
         value={maxCards}
         onChange={(e) => setMaxCards(e.target.value)}
       />
+      <p>Category</p>
       <input value={category} onChange={(e) => setCategory(e.target.value)} required />
       <button
         onClick={(e) => {
           e.preventDefault();
-          if (category.length) {
+          if (category.trim()) {
             setGame(!game);
           }
         }}

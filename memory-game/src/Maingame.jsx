@@ -3,6 +3,7 @@ import "./Maingame.css";
 import Scoreboard from "./components/Scoreboard";
 import GameSettings from "./components/GameSettings";
 import GameBoard from "./components/Gameboard";
+import EndMsg from "./components/EndMessage";
 
 function Maingame() {
   const [score, setScore] = useState(0);
@@ -12,13 +13,19 @@ function Maingame() {
   const [cards, setCards] = useState([]);
   const [selectedCards, setSelectedCards] = useState([]);
   const [category, setCategory] = useState("Cat");
+  const [endMsg, setEndMsg] = useState("");
 
-  function shuffleCards(cards) {
-    return cards.sort(() => Math.random() - 0.5);
+  const shuffleCards = (cards) => cards.sort(() => Math.random() - 0.5);
+  const showSetting = () => !game && !endMsg;
+
+  function resetGame() {
+    setGame(false);
+    setSelectedCards([]);
+    setScore(0);
+    setEndMsg("");
   }
 
-  function handleCardClick({ target }, id) {
-    console.log(target, id);
+  function handleCardClick(id) {
     if (!selectedCards.includes(id)) {
       setSelectedCards([...selectedCards, id]);
       setScore((prevScore) => prevScore + 1);
@@ -26,24 +33,23 @@ function Maingame() {
       if (score + 1 >= bestScore) {
         setBestScore(score + 1);
       }
+      if (score + 1 >= maxCards) {
+        setEndMsg(`Great Job, Winner :)`);
+      }
     } else {
-      setGame(!game);
-      setSelectedCards([]);
-      setScore(0);
+      setEndMsg(`Try again?`);
     }
-    console.log(selectedCards);
   }
 
   useEffect(() => {
     let isMounted = true;
     async function getCat() {
       try {
-        const query = category.trim();
+        let query = category.trim();
         if (!query) {
           setCards([]);
           return;
         }
-
         const data = await fetch(
           `https://api.pexels.com/v1/search?query=${query}&per_page=${maxCards}`,
           {
@@ -69,8 +75,8 @@ function Maingame() {
   return (
     <main className="main">
       <Scoreboard score={score} best={bestScore} max={maxCards} />
-
-      {!game && (
+      {endMsg && <EndMsg endMsg={endMsg} resetGame={resetGame} />}
+      {showSetting() && (
         <GameSettings
           maxCards={maxCards}
           setMaxCards={setMaxCards}
@@ -80,7 +86,8 @@ function Maingame() {
           setGame={setGame}
         />
       )}
-      <GameBoard game={game} cards={cards} handleCardClick={handleCardClick} />
+
+      {!endMsg && <GameBoard game={game} cards={cards} handleCardClick={handleCardClick} />}
     </main>
   );
 }

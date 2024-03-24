@@ -7,14 +7,13 @@
 
 .game-form {
   position: absolute;
-  left: 50%;
   top: 20%;
-  transform: translateX(-50%);
   display: flex;
   flex-direction: column;
   gap: 10px;
-  padding: 20px;
-  border: 2px solid black;
+  padding: 30px;
+  border-radius: 8px;
+  box-shadow: 0 0 30px black;
 }
 
 .gameboard {
@@ -28,8 +27,65 @@
 
 .card {
   flex: 0 0 175px;
+  border-radius: 8px;
+  background-color: var(--fontColor);
+  box-shadow: 0 3px 10px black;
+  padding: 5px;
+  transition: all 0.3s ease;
+}
+
+.card:hover {
+  transform: scale(1.1);
+  background-color: var(--secondaryColor);
+}
+
+.end-message {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  border-radius: 8px;
+  box-shadow: 0 0 10px black;
+  padding: 50px;
+  gap: 20px;
+  width: 300px;
+  position: absolute;
+  top: 20%;
+}
+
+.end-message > p {
+  font-size: 2.5rem;
 }
 
 img {
   width: 100%;
+  border-radius: 8px;
+  /* border: 2px solid var(--fontColor); */
+}
+
+input {
+  background-color: transparent;
+  border: 1px solid var(--fontColor);
+  padding: 10px 20px;
+  border-radius: 8px;
+  text-align: center;
+}
+
+.game-form .game-form__range {
+  padding: 0;
+}
+
+button {
+  background-color: var(--bgColor2);
+  border-radius: 8px;
+  border: 2px solid var(--fontColor);
+  letter-spacing: 5px;
+  font-size: 1.5rem;
+  transition: all 0.3s ease;
+  width: 100%;
+}
+
+button:hover {
+  transform: translateY(3px) scale(1.05);
+  letter-spacing: 10px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
 }

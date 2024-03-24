@@ -3,9 +3,10 @@ import Maingame from "./Maingame";
 function App() {
   return (
     <>
-      <header>Memory Card Game</header>
-      <p>Select each photo once</p>
-      {/* <Modal /> */}
+      <header>
+        <h1>Memory Card Game</h1>
+        <p>Select each photo once</p>
+      </header>
       <Maingame />
       <footer>Created by Adrian</footer>
     </>
