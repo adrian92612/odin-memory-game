@@ -9,7 +9,7 @@ function Maingame() {
   const [score, setScore] = useState(0);
   const [bestScore, setBestScore] = useState(0);
   const [game, setGame] = useState(false);
-  const [maxCards, setMaxCards] = useState(9);
+  const [maxCards, setMaxCards] = useState(10);
   const [cards, setCards] = useState([]);
   const [selectedCards, setSelectedCards] = useState([]);
   const [category, setCategory] = useState("Cat");
